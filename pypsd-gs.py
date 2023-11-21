@@ -605,8 +605,10 @@ if __name__=='__main__':
             except:
                 print("Skip GITHUB_ENV update")
             crp.to_encrypted(dataframe, password=psdpass, path='datastore.crypt')
-
+    
+    dataframe['Stripend'] = pd.to_numeric(dataframe['Stripend'], errors='coerce')
     dataframe.sort_values(by='Stripend',ascending=False, inplace=True)
+    dataframe['Stripend'] = dataframe['Stripend'].astype(str)
     dataframe.style.format({"Last updated on": lambda t: t.strftime("%b  %d %Y  %H:%M%p")})
     dataframe['Last updated on']=dataframe['Last updated on'].dt.strftime('%b %d %Y %H:%M%p')
     #dataframe.style.format({"Company Added on": lambda t: t.strftime("%b  %d %Y  %H:%M%p")})
